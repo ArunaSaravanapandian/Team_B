@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 
 
 def visualize_data():
+    # obtaining population data from the csv file
+    kenya_population = pd.read_csv("kenya_population.csv")
     # assign dataset names
     list_of_names = ['school', 'health']
 
@@ -48,6 +50,30 @@ def visualize_data():
         yaxis_title="Number of county"
     )
     histogram_visualization.show()
+
+    histogram_population = go.Figure().add_trace(
+        go.Histogram(
+            x=health_data['county'],
+            y=school_county,
+            name="school"
+        )
+    ).add_trace(
+        go.Histogram(
+            x=health_data['county'],
+            y=health_county,
+            name="health"
+        )
+    ).add_trace(
+        go.Histogram(
+            x=health_data['county'],
+            y=kenya_population['Measure Values'],
+            name="population"
+        )
+    ).update_layout(
+        xaxis_title="County",
+        yaxis_title="population with respect to health and school"
+    )
+    histogram_population.show()
 
     # map visualization for schools in Kenya
     map_school_visualization = px.scatter_mapbox(
